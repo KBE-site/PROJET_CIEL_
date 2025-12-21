@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='layout.css') }}">
+    <title>Projet CIEL</title>
+</head>
+<body>
+    <header>
+        <h1 id="title">Projet CIEL</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('status') }}">status</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="content-area">
+        {% block content %}{% endblock %}
+    </div>
+
+    <div class="bottom-panel-content">
+        <div class="selected-object-low-view">
+                <div class="obj-content">
+                        {% if status == "POINTING" %}
+                            <span id="target">Target: {{ target_name }}</span>
+                            <span id="alt">ALT: {{ target_alt }}</span>
+                            <span id="az">AZ: {{ target_az }}</span>
+                        {% endif %}
+                </div>
+                <div class="status-content">
+                    {% if established %}
+                        <p>Established</p>
+                    {% else %}
+                        <p>{{ status }}</p>
+                    {% endif %}
+                </div>
+        </div>
+    </div>
+</body>
+</html>

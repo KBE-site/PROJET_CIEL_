@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+<section class="body-section">
+    <div class="selector-object-section">
+        <form method="post" id="obj-form">
+            <input type="text" name="obj" id="object-input" placeholder="Enter object name">
+            <input id="submit-button" type="submit" value="Pointing to Object">
+        </form>
+    </div>
+    <div class="information-about-object-section">
+        <h2>Information About Object Section</h2>
+    </div>
+</section>
+
+{% endblock %}
