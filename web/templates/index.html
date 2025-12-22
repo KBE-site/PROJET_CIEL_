@@ -8,14 +8,19 @@
 </head>
 <section class="body-section">
     <div class="selector-object-section">
-        <form method="post" id="obj-form">
+        <form action="{{ url_for('pointing') }}" method="post" id="obj-form">
             <input type="text" name="obj" id="object-input" placeholder="Enter object name">
             <input id="submit-button" type="submit" value="Pointing to Object">
+        </form>
+        <form action="{{ url_for('stop_pointing') }}" method="post" id="obj-form">
+            <input id="submit-button" type="submit" value="Stop Pointing">
         </form>
     </div>
     <div class="information-about-object-section">
         <h2>Information About Object Section</h2>
     </div>
 </section>
+
+<script src="{{ url_for('static', filename='index.js') }}"></script>
 
 {% endblock %}

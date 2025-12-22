@@ -21,21 +21,17 @@
 
     <div class="bottom-panel-content">
         <div class="selected-object-low-view">
-                <div class="obj-content">
-                        {% if status == "POINTING" %}
+                <div class="obj-content" id="obj-content">
                             <span id="target">Target: {{ target_name }}</span>
                             <span id="alt">ALT: {{ target_alt }}</span>
                             <span id="az">AZ: {{ target_az }}</span>
-                        {% endif %}
                 </div>
                 <div class="status-content">
-                    {% if established %}
-                        <p>Established</p>
-                    {% else %}
-                        <p>{{ status }}</p>
-                    {% endif %}
+                        <span id="status-text"></span>
                 </div>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='layout.js') }}"></script>
 </body>
 </html>

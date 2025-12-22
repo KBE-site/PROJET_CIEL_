@@ -62,7 +62,7 @@ li a:hover {
 
 
 .obj-content {
-    display: flex;
+    display: none;
     margin-left: 20px;
 }
 
