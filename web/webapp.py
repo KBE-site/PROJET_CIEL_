@@ -1,6 +1,6 @@
 import secrets
 
-from flask import Flask, render_template, jsonify, request ,redirect, url_for, flash
+from flask import Flask, render_template, jsonify, request ,redirect, url_for
 
 from core.status import status_manager
 from core.manager import Manager
@@ -17,7 +17,6 @@ socketio.init_app(app)
 def handle_connect():
     status = status_manager.get_status()
     socketio.emit('status_update', status)
-
 
 @socketio.on('disconnect')
 def handle_disconnect():

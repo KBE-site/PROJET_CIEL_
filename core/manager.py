@@ -37,7 +37,7 @@ class Manager:
         last_alt, last_az = None, None
         while status_manager.get_status()['status'] != AppStatus.IDLE and self._tracking_target == target:
             try:
-                alt, az = self._tracker.get_alt_az(target)
+                alt, az = self._tracker.get_object(target)
 
                 if alt != last_alt or az != last_az:
                     socketio.emit(

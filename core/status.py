@@ -84,7 +84,7 @@ def _debug(action: bool) -> None:
     if action:
         print(f"3 POINTING : {status_manager.get_status()}")
 
-    # status_manager.set_established(True)
-    # if action:
-    #     print(f"3 POINTING established: {status_manager.get_status()}")
+    status_manager.set_established(True)
+    if action:
+        print(f"3 POINTING established: {status_manager.get_status()}")
 
