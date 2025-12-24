@@ -1,4 +1,6 @@
-from core.websocket import socketio
+import numbers
+
+from web.websocket import socketio
 from core.status import AppStatus, status_manager
 from tracker.tarcker import Tracker
 
@@ -16,7 +18,8 @@ class Manager:
                 status_manager.get_status()
         )
 
-    def point_to(self, target: str) -> None:
+    def point_to(self, target: str, temperature, pressure, humidity) -> None:
+
         if not isinstance(target, str):
             raise ValueError("Target must be a string")
 
@@ -25,6 +28,13 @@ class Manager:
             raise ValueError("Target must be a non-empty string")
         
         status_manager.set_status(AppStatus.POINTING, target)
+
+        self.set_meteo(
+            temperature,
+            pressure,
+            humidity
+        )
+
         socketio.emit(
             'status_update',
             status_manager.get_status()
@@ -32,6 +42,15 @@ class Manager:
 
         self._tracking_target = target
         socketio.start_background_task(self._track_loop, target)
+
+    def set_meteo(self, temperature, pressure, humidity):
+        for name, value in zip(("temperature", "pressure", "humidity"), (temperature, pressure, humidity)):
+            if value is not None and not isinstance(value, numbers.Real):
+                raise ValueError(f"{name} must be a real number or None")
+            
+        status_manager.set_temperature(temperature)
+        status_manager.set_pressure(pressure)
+        status_manager.set_humidity(humidity)
         
     def _track_loop(self, target: str):
         last_alt, last_az = None, None
@@ -64,4 +83,5 @@ class Manager:
                 'status_update',
                 status_manager.get_status()
         )
+
 

@@ -9,6 +9,7 @@
 .selector-object-section {
     border-right: solid 1px;
     width: 50%;
+    padding: 0 10px 0 10px;
 }
 
 .information-about-object-section {
@@ -17,19 +18,49 @@
     
 /* FORM */
 
-#obj-form {
+#obj-form-pointing, #obj-form-stop-pointing {
     display: flex;
     flex-direction: column;
     margin-top: 10px;
 }
 
-#object-input {
+.input-pointing-container-top {
+    display: flex;
+    align-items: center;
     margin-bottom: 10px;
-    padding: 5px;
-    font-size: 16px;
 }
 
-#submit-button {
+.advanced-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    border: 0.2px solid;
+    padding: 5px 0 0 2px;
+}
+
+.advanced-form div {
+    margin-bottom: 5px;
+}
+
+#object-input-pointing {
+    padding: 5px;
+    font-size: 16px;
+    flex: 1;
+}
+
+
+.checkbox-advanced-mode-container {
+    display: flex;
+    align-items: center;
+    margin: 0 0 0 2px;
+}
+
+.checkbox-advanced-mode-container label {
+    font-size: small;
+    margin-left: 2px;
+}
+
+#submit-button-pointing, #submit-button-stop-pointing {
     padding: 5px;
     font-size: 16px;
     cursor: pointer;

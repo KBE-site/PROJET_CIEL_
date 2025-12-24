@@ -1,0 +1,87 @@
+body {
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+header {
+    display: flex;
+    border-bottom: 2px solid;
+}
+
+.main-section {
+    flex: 1;
+    display: flex;
+}
+
+.left-visual-section {
+    height: 100%;
+    width: 50%;
+    float: left;
+    border-right: 1px solid;
+}
+
+.right-commandes-section {
+    height: 100%;
+    width: 50%;
+    border-left: 1px solid;
+}
+
+/* SPHERE */
+
+.visual-sphere-container {
+    height: 50%;
+    border-bottom: 1px solid;
+    position: relative;
+}
+
+.sphere-content{
+    height: 90%;
+    width: 90%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.sphere-content .zero-deg-az-content {
+    height: 100%;
+    border: 1px solid;
+    border-radius: 100%;
+}
+
+.cardinal-point {
+    height: 100%;
+}
+
+.cardinal-point #north-point {
+    position: absolute;
+    left: 50%;
+    top: 3%;
+    transform: translate(-50%, -50%);
+}
+
+.cardinal-point #east-point {
+    position: absolute;
+    left: 50%;
+    top: 98%;
+    transform: translate(-50%, -50%);
+}
+
+.cardinal-point #south-point {
+    position: absolute;
+    left: 3%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.cardinal-point #woest-point {
+    position: absolute;
+    left: 98%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+

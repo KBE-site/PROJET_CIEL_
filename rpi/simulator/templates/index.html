@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulateur</title>
+    <link rel="stylesheet" href="../static/index.css">
+</head>
+<body>
+    <header>
+        <div class="header-title">
+            <h1>Projet Ciel Simulateur</h1>
+        </div>
+        <div class="header-navbar">
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('status') }}">status</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="main-section">
+        <div class="left-visual-section">
+            <div class="visual-sphere-container">
+                <div class="pointer-sphere-content"></div>
+                <div class="sphere-content">
+                    
+                </div>
+                <div class="cardinal-point">
+                    <span id="north-point">N</span>
+                    <span id="east-point">E</span>
+                    <span id="south-point">S</span>
+                    <span id="woest-point">W</span>
+                </div>
+            </div>
+        </div>
+        <div class="right-commandes-section"></div>
+    </section>
+</body>
+</html>

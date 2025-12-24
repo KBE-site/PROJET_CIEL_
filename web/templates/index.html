@@ -1,26 +1,54 @@
 {% extends "layout.html" %}
+
+    {% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    {% endblock %}
+
 {% block content %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
-</head>
-<section class="body-section">
-    <div class="selector-object-section">
-        <form action="{{ url_for('pointing') }}" method="post" id="obj-form">
-            <input type="text" name="obj" id="object-input" placeholder="Enter object name">
-            <input id="submit-button" type="submit" value="Pointing to Object">
-        </form>
-        <form action="{{ url_for('stop_pointing') }}" method="post" id="obj-form">
-            <input id="submit-button" type="submit" value="Stop Pointing">
-        </form>
-    </div>
-    <div class="information-about-object-section">
-        <h2>Information About Object Section</h2>
-    </div>
-</section>
+    <section class="body-section">
+        <div class="selector-object-section">
 
-<script src="{{ url_for('static', filename='index.js') }}"></script>
+            <form action="{{ url_for('pointing') }}" method="post" id="obj-form-pointing">
+                <div class="input-pointing-container">
+                    <div class="input-pointing-container-top">
+                        <input type="text" name="obj" id="object-input-pointing" placeholder="Enter object name" required>
+                        <div class="checkbox-advanced-mode-container">
+                            <input type="checkbox" id="checkbox-advanced-mode" name="checkbox-advanced-mode">
+                            <label for="checkbox-advanced-mode">Advanced</label>
+                        </div>
+                    </div>
+                    <div class="advanced-form" id="advanced-form">
+                        <div class="temperature-container">
+                            <label for="temperature">Temperature : </label>
+                            <input type="number" name="temperature" id="temperature-input" placeholder="C°">
+                        </div>
+                        <div class="pressure-container">
+                            <label for="pressure">Pressure : </label>
+                            <input type="number" name="pressure" id="pressure-input" placeholder="hPa">
+                        </div>
+                        <div class="humidity-container">
+                            <label for="humidity">Humidity : </label>
+                            <input type="number" name="humidity" id="humidity-input" placeholder="%">
+                        </div>
+                    </div>
+                </div>
+                <input id="submit-button-pointing" type="submit" value="Pointing to Object">
+            </form>
+
+            <form action="{{ url_for('stop_pointing') }}" method="post" id="obj-form-stop-pointing">
+                <input id="submit-button-stop-pointing" type="submit" value="Stop Pointing">
+            </form>
+        </div>
+
+        <div class="information-about-object-section">
+            <h2>Information About Object Section</h2>
+        </div>
+
+    </section>
+
+    {% block script %}
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+    {% endblock %}
 
 {% endblock %}

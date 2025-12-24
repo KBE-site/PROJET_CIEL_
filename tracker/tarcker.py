@@ -6,6 +6,9 @@ from astropy.coordinates import get_body, EarthLocation, AltAz, SkyCoord
 from astropy.time import Time
 from astroquery.simbad import Simbad
 
+from core.status import status_manager
+from api.meteo import Meteo
+
 class Tracker:
     """    
     A tracker for calculating the altitude and azimuth coordinates of celestial bodies.
@@ -28,8 +31,35 @@ class Tracker:
         >>> print(f"Sun altitude: {alt}°, azimuth: {az}°")
         
     """
-    def __init__(self, lat: float=48.85341, lon: float=2.3488, height: float=42.0) -> None:
+    def __init__(self, lat: float=48.85341, lon: float=2.3488, height: float=42.0) -> None: # Position de Paris ouest
         self._location = EarthLocation(lat=lat, lon=lon, height=height)
+
+    def _get_meteo(self):
+        user = status_manager.get_status()["meteorological"]
+        api = Meteo().get_current_meteo()
+
+        temperature = (
+            user["temperature"] 
+            if user["temperature"] is not None 
+            else api.get("temperature", 15)
+        )
+
+        pressure = (user["pressure"] 
+            if user["pressure"] is not None 
+            else api.get("pressure", 1013.25)
+        )
+
+        humidity = (user["humidity"] 
+            if user["humidity"] is not None
+            else api.get("humidity", 0.5)
+        )
+
+        import astropy.units as u
+        return {
+            "temperature": temperature * u.deg_C,
+            "pressure": pressure * u.hPa,
+            "humidity": humidity
+        }
 
     def _altaz(self) -> tuple[AltAz, Time]:
         """
@@ -43,12 +73,14 @@ class Tracker:
             - Time: The current UTC time of the observation
         """
         now = Time(datetime.now(UTC))
+        meteo = self._get_meteo()
+
         return AltAz(
             obstime=now,
             location=self._location,
-            pressure=1013*u.hPa,
-            temperature=15*u.deg_C,
-            relative_humidity=0.5
+            temperature=meteo['temperature'],
+            pressure=meteo['pressure'],
+            relative_humidity=meteo['humidity']
         ), now
 
     def _get_solar_space_object(self, name: str) -> SkyCoord:

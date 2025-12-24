@@ -30,3 +30,14 @@ def handle_error(func):
             flash(str(e), 'error')
             return redirect(url_for("index"))
     return wrapper
+
+def to_float_or_none(value):
+    if value is None:
+        return None
+    
+    if isinstance(value, str):
+        value = value.strip()
+        if value == "":
+            return None
+        
+    return float(value)

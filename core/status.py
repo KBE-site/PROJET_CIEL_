@@ -2,6 +2,8 @@ from enum import Enum
 from threading import Lock
 from typing import Optional
 
+import numbers
+
 class AppStatus(str, Enum):
     """
     Docstring for AppStatus
@@ -37,10 +39,15 @@ class StatusManager:
             Returns the current status, target, and established flag as a dictionary.
     """ 
     def __init__(self) -> None:
-        self._status: AppStatus = AppStatus.IDLE
-        self._established: bool = False
-        self._target: Optional[str] = None
         self._lock = Lock()
+
+        self._status: AppStatus = AppStatus.IDLE
+        self._target: Optional[str] = None
+        self._established: bool = False
+
+        self._temperature: Optional[numbers.Real] = None
+        self._pressure: Optional[numbers.Real] = None
+        self._humidity: Optional[numbers.Real] = None
 
     def set_status(self, status: AppStatus, target: Optional[str] = None) -> None:
         with self._lock:
@@ -57,22 +64,57 @@ class StatusManager:
                 self._status = status
                 self._established = False
                 self._target = None
+                self._temperature = None
+                self._pressure = None
+                self._humidity = None
 
     def set_established(self, established: bool) -> None:
         with self._lock:
             if not isinstance(established, bool):
                 raise ValueError("'established' must be a bool")
+            
             if self._status != AppStatus.POINTING:
                 raise ValueError("Cannot set 'established' unless status is POINTING")
             self._established = established
+
+    def set_temperature(self, temperature) -> None:
+        with self._lock:
+            if temperature is not None and not isinstance(temperature, numbers.Real):
+                self.set_status(AppStatus.IDLE)
+                raise ValueError('temperature must be a real number or null')
+
+            self._temperature = temperature
+
+    def set_pressure(self, pressure) -> None:
+        with self._lock:
+            if pressure is not None and not isinstance(pressure, numbers.Real):
+                self.set_status(AppStatus.IDLE)
+                raise ValueError('pressure must be a real number or null')
+
+            self._pressure = pressure
+
+    def set_humidity(self, humidity) -> None:
+        with self._lock:
+            if humidity is not None and not isinstance(humidity, numbers.Real):
+                self.set_status(AppStatus.IDLE)
+                raise ValueError('humidity must be a real number or null')
+
+            self._humidity = humidity
 
     def get_status(self) -> dict:
         with self._lock:
             return {    
                 "status": self._status.value,
                 "target": self._target,
-                "established": self._established
+                "established": self._established,
+                "meteorological": {
+                    "temperature": self._temperature,
+                    "pressure": self._pressure,
+                    "humidity": self._humidity
+                }
             }
+
+
         
 status_manager = StatusManager()
 

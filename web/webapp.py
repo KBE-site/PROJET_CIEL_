@@ -5,7 +5,8 @@ from flask import Flask, render_template, jsonify, request ,redirect, url_for
 from core.status import status_manager
 from core.manager import Manager
 from core.helpers import handle_error
-from core.websocket import socketio
+from web.websocket import socketio
+from web.forms import PointingForm
 
 app = Flask(__name__)
 manager = Manager()
@@ -37,8 +38,14 @@ def index():
 @app.route('/pointing', methods=['POST'])
 @handle_error
 def pointing():
-    obj = request.form.get('obj')
-    manager.point_to(obj) # type: ignore
+    form = PointingForm()
+
+    manager.point_to(
+        target=form.obj,
+        temperature=form.temperature,
+        pressure=form.pressure,
+        humidity=form.humidity
+    )
 
     return redirect(url_for("index"))
 
